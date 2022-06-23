@@ -1,8 +1,10 @@
 // expand around center
-var longestPalindromicSubstring = function (input) {
+function longestPalindromicSubstring(input) {
     if (input.length === 0)
-        return 0;
+        return "";
     var longest = 1;
+    var left_index = 0;
+    var right_index = 0;
     // check odd-length palindromes
     for (var i = 0; i < input.length; i++) {
         var left = i - 1;
@@ -10,7 +12,11 @@ var longestPalindromicSubstring = function (input) {
         while (left > -1 &&
             right < input.length &&
             input.charAt(left) === input.charAt(right)) {
-            longest = Math.max(longest, right - left + 1);
+            if (longest < right - left + 1) {
+                longest = Math.max(longest, right - left + 1);
+                left_index = left;
+                right_index = right;
+            }
             left--;
             right++;
         }
@@ -20,11 +26,16 @@ var longestPalindromicSubstring = function (input) {
         while (left > -1 &&
             right < input.length &&
             input.charAt(left) === input.charAt(right)) {
-            longest = Math.max(longest, right - left + 1);
+            if (longest < right - left + 1) {
+                longest = Math.max(longest, right - left + 1);
+                left_index = left;
+                right_index = right;
+            }
             left--;
             right++;
         }
     }
-    return longest;
-};
+    return input.substring(left_index, right_index + 1);
+}
+;
 console.log(longestPalindromicSubstring("ra"));
